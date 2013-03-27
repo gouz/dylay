@@ -1,3 +1,8 @@
+/**
+ * Copyright (c) 2013 Sylvain "GouZ" Gougouzian (sylvain@gougouzian.fr) 
+ * MIT (http://www.opensource.org/licenses/mit-license.php) licensed.
+ * GNU GPL (http://www.gnu.org/licenses/gpl.html) licensed.
+ */
 ! function($) {
 	var DyLay = function(content, opts) {
 		this.opts = opts;
