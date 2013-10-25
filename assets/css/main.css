@@ -1,0 +1,14 @@
+body {
+    color: #099acb;
+    font-size: 1.6em;
+    font-family: 'Roboto', sans-serif;
+}
+
+h1 {
+	font-family: 'Roboto', sans-serif;
+	font-weight: bold;
+}
+#dylay li { color: #FFFFFF; }
+
+#dylay div span { border-radius: 5px; padding: 2px 5px; color: #FFFFFF; display: block; }
+	
