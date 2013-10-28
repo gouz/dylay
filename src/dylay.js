@@ -5,8 +5,9 @@
  * GNU GPL (http://www.gnu.org/licenses/gpl.html) licensed.
  */
 !function($) {
+	"use strict";
 	var DyLay = function(content, opts) {
-		this.version = 2.1;
+		this.version = 2.2;
 		this.opts = opts;
 		this.$element = $(content).css('position', 'relative');
 		this._init();
@@ -18,46 +19,62 @@
 				top : 0,
 				left : 0
 			}).data('dylay', 1);
-			var t = this;
+			this.position();
+			var t = this, timer;
 			$(window).on('resize', function() {
-				t.position();
-			}).trigger('resize');
+				clearTimeout(timer);
+				timer = setTimeout(function () {
+					t.position();
+				}, 100);
+			});
 		},
 		_max : function(x, w, hs) {
 			var i = w, j = hs[x];
-			while (i--)
-			if (j < hs[x + i])
-				j = hs[x + i];
+			while (i--) {
+				if (j < hs[x + i])
+					j = hs[x + i];
+			}
 			return j;
 		},
 		position : function() {
-			var w = this.$element.width(), is = this.items.filter(function() {
+			var w = parseInt(this.$element.width()), is = this.items.filter(function() {
 				return $(this).data('dylay');
 			}), l = is.length, i = w + 1, hs = [], j, _x = 0;
 			while (i--)
-			hs[i] = 0;
-			for ( i = 0; i < l; i++) {
-				var $i = is.eq(i), $iw = parseInt($i.outerWidth(true)), $ih = parseInt($i.outerHeight(true)), x = 0, j = 0, k, h = 9e9, _h = h;
-				while (j < w) {
-					k = j;
-					while (k++ <= (j + $iw))
-					if (k + $iw <= w) {
-						_h = this._max(k, $iw, hs) + $ih;
-						if (h > _h) {
-							h = _h;
-							x = k;
+				hs[i] = 0;
+			for (i = 0; i < l; i++) {
+				var $i = is.eq(i), 
+					$iw = Math.floor($i[0].getBoundingClientRect().width), 
+					$ih = parseInt($i.outerHeight(true)), 
+					x = 0, 
+					j = 0, 
+					h = Infinity, 
+					_h = h, 
+					k, 
+					_w, 
+					_k;
+				while (j <= w) {
+					k = j - 1;
+					_w = j + $iw;
+					while (k++ <= _w) {
+						_k = k + $iw;
+						if (_k <= w) {
+							_h = this._max(k, $iw, hs) + $ih;
+							if (h > _h) {
+								h = _h;
+								x = k;
+							}
 						}
 					}
 					j += $iw;
 				}
-				if (x == 1) x = 0;
 				$i.stop().animate({
 					left : x,
 					top : h - $ih
 				}, this.opts.speed, this.opts.easing);
 				j = $iw;
 				while (j--)
-				hs[j + x] = h;
+					hs[j + x] = h;
 			}
 			this.$element.height(Math.max.apply(Math, hs));
 		},
