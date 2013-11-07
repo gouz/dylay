@@ -7,7 +7,7 @@
 !function($) {
 	"use strict";
 	var DyLay = function(content, opts) {
-		this.version = 2.2;
+		this.version = 2.3;
 		this.opts = opts;
 		this.$element = $(content).css('position', 'relative');
 		this._init();
@@ -44,7 +44,7 @@
 				hs[i] = 0;
 			for (i = 0; i < l; i++) {
 				var $i = is.eq(i), 
-					$iw = Math.floor($i[0].getBoundingClientRect().width), 
+					$iw = Math.floor($i[0].getBoundingClientRect().width + parseInt($i.css('margin-left')) + parseInt($i.css('margin-right'))), 
 					$ih = parseInt($i.outerHeight(true)), 
 					x = 0, 
 					j = 0, 
