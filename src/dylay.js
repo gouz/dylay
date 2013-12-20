@@ -7,7 +7,7 @@
 !function($) {
 	"use strict";
 	var DyLay = function(content, opts) {
-		this.version = 2.3.1;
+		this.version = '2.3.1';
 		this.opts = opts;
 		this.$element = $(content).css('position', 'relative');
 		this._init();
