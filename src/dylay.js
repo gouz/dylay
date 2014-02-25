@@ -23,7 +23,7 @@
 			var t = this, timer;
 			$(window).on('resize', function() {
 				clearTimeout(timer);
-				timer = setTimeout(function () {
+				timer = setTimeout(function() {
 					t.position();
 				}, 100);
 			});
